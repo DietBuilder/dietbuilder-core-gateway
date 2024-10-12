@@ -1,0 +1,71 @@
+openapi: "3.0.3"
+
+info:
+  title: Dietbuilder-engine-engine-gateway
+  version: 0.1.0
+  description: Rest gateway for diet builder engine
+  contact:
+    name: Michał Chrust
+    email: michal.chrust@outlook.com
+
+paths:
+  /users:
+    post:
+      summary: Sent user data required to create diet by diet generation engine
+      operationId: putUserDataToQueue
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              $ref: "#/components/schemas/User"
+      responses:
+        200:
+          description: Element has been sent.
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - userId
+        - gender
+        - height
+        - weight
+        - age
+        - psychicalActivityRatio
+        - numberOfMeals
+        - unwantedComestibleProductsIDs
+      properties:
+        id:
+          type: integer
+          format: int64
+        gender:
+          enum:
+            - MALE
+            - FEMALE
+        height:
+          type: number
+          format: double
+        weight:
+          type: number
+          format: double
+        age:
+          type: integer
+          format: int32
+        psychicalActivityRatio:
+          type: number
+          format: double
+        numberOfMeals:
+          type: integer
+          format: int32
+        userGoal:
+          enum:
+            - REDUCE
+            - MAINTAIN
+            - CARRY
+        unwantedComestibleProductsIDs:
+          items:
+            type: integer
+            format: int64
